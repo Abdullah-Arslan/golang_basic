@@ -105,23 +105,26 @@ func main() {
 
 	reader := bufio.NewReader(os.Stdin)
 
-	for attempts := 0; attempts < 10; attempts++ { //Burada sayı tahmin edilirken toplamda kalan hakkın tutulacağı yer
+	//Burada sayı tahmin edilirken toplamda kalan hakkın tutulacağı yer
+	for attempts := 0; attempts < 10; attempts++ {
 		fmt.Println(10-attempts, "Bu kadar hakkınız kaldı")
 		fmt.Println("Lütfen tahminizi yazınız")
 
-		input, err := reader.ReadString('\n')
+		//Girilen değer buradan alınır.
+		input, err := reader.ReadString('\n') //Girilen değer buradan alınır.
 		if err != nil {
 			fmt.Println(err)
 		}
 
+		//Gelen string değer sayıya çevriliyor bu kısımda
 		input = strings.TrimSpace(input)
 		num, err := strconv.Atoi(input)
 		if err != nil {
 			fmt.Println(err)
 		}
-		if num > target {
+		if num > target { //Bu kısımda yukarıda istenen 1-100 arasındaki tutulan sayıdan buyükse aşağıdakini yazdır diyoruz.
 			fmt.Println("Tahmininiz daha büyük, daha küçük bir sayı giriniz.")
-		} else if num < target {
+		} else if num < target { //burada yukarı kısımda istenen 1-100 den num daha küçükse bu kısmı yazdır diyoruz.
 			fmt.Println("Tahmininiz daha küçük, daha büyük bir sayı giriniz.")
 		} else {
 			fmt.Println("Doğru Tahmin, hedef sayı", target, " idi ", attempts, " seferde bulundunuz. ")
