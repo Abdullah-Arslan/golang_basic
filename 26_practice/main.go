@@ -29,7 +29,7 @@ func calculation(num1, num2 int) (sum int, dif int, prod int) { //üç dönüş 
 
 //-----------------------------------------------------------------------------------------------------
 
-// 2 -) Kullanıcı tarafından girilen nota göre geçtiniz
+/* // 2 -) Kullanıcı tarafından girilen nota göre geçtiniz
 // veya kaldınız geri dönüşünü yazdırınız.
 // Eğer not 50 den küçükse kaldı büyükse geçti şeklinde olacak kodu yazdırsın.
 package main
@@ -76,5 +76,65 @@ func getGrade() (int, error) { //iki parametre aldı bunlardan birisi int diğer
 		fmt.Println(err) //hata oldugunda bunu döndürecek
 	}
 	return num, nil //hata olmadıgında bu kısmı yazdıracak yani nil olarak kalacak
+
+}
+*/
+
+//-----------------------------------------------------------------------------------------------------
+
+// 3 -) 1 ile yüz arasındaki bir sayıyı tahmin etme uygulaması
+// yazınız. Toplam tahmin hakkınız 10 olsun.
+
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"math/rand"
+	"os"
+	"strconv"
+	"strings"
+	"time"
+)
+
+func main() {
+
+	target := numRand(1, 100)
+
+	fmt.Println("1 ile 100 Arasındaki Sayıyı Bulmaya Çalışınız ")
+
+	reader := bufio.NewReader(os.Stdin)
+
+	for attempts := 0; attempts < 10; attempts++ { //Burada sayı tahmin edilirken toplamda kalan hakkın tutulacağı yer
+		fmt.Println(10-attempts, "Bu kadar hakkınız kaldı")
+		fmt.Println("Lütfen tahminizi yazınız")
+
+		input, err := reader.ReadString('\n')
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		input = strings.TrimSpace(input)
+		num, err := strconv.Atoi(input)
+		if err != nil {
+			fmt.Println(err)
+		}
+		if num > target {
+			fmt.Println("Tahmininiz daha büyük, daha küçük bir sayı giriniz.")
+		} else if num < target {
+			fmt.Println("Tahmininiz daha küçük, daha büyük bir sayı giriniz.")
+		} else {
+			fmt.Println("Doğru Tahmin, hedef sayı", target, " idi ", attempts, " seferde bulundunuz. ")
+			break
+		}
+
+	}
+
+}
+
+func numRand(min, max int) int {
+
+	rand.Seed(time.Now().Unix()) //Fonksiyon her çalıştırıldıgı yeni rakamın gelmesi için rand paketinden Seed methodu alınıyor.
+	return rand.Intn(max-min) + min
 
 }
